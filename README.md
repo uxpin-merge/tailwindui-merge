@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# UXPin Merge & TailwindUI – Experimental Mode Boilerplate Repository
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+UXPin Merge is a revolutionary technology that lets users import (and keep in sync) coded React.js components from GIT repositories to UXPin editor (https://uxpin.com). The imported components are 100% identical to components used by developers during the development process. It means that components are going to look and, function (interactions, data) identical to the real product experienced by the users.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+This boilerplate needs node and npm installed to run. Once you're ready clone the repository and install all the dependencies (`npm install`).
 
-### `npm start`
+## What is Merge Experimental Mode
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![alt text](https://preview.ibb.co/fsq20L/merge-exp.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Merge Experimental Mode let's you render your React.js components in a dev version of UXPin Design Editor directly from your local environment. 
+You can test your components and see how they're going to behave in UXPin Design Editor!
 
-### `npm test`
+## Rendering Components in the browser
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Among the dependencies of this boilerplate you'll find `uxpin-merge` this tool prepares components for integration with UXPin. It has a built in development server that you can use to see the rendered components in the browser. To start the dev server use the following command:
 
-### `npm run build`
+```bash
+npm run start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+When you're changing anything in the components files and you want to re-render components, don't forget to kill the process. Otherwise you'll get a `ELIFECYCLE` error. A handy way to kill all the node processes including the dev server is to run in your terminal:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+killall -9 node
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Adding new components
 
-### `npm run eject`
+Adding components to Merge is no different than creating normal React.js components. Merge accepts any standard approach to React. The only limitations that you should be aware of are:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Components have to have default exports
+- Components need to exist in separate directories
+- Only one component is allowed per file and directory e.g. `./src/Button/Button.js`
+- You have to add the component to uxpin.config.js file
+- You have to prepare presets for every component (temporary restrictions to be replaced by jsx presets)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Creating presets
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Preset is a JSX file that describes components in a structured way.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- For `./src/Button/Button.js` component we require one preset in `./src/Button/presets/0-default.jsx`
 
-## Learn More
+Example preset:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+<Button
+    uxpId="button"
+    class="btn btn-primary"
+    color="primary"
+    disabled={false}
+    label="Button">
+  </Button>
+</Button>
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+As you can see we are defining the default props and the structure of the Button component. When dragged onto the UXPin canvas, the initial render of the component will appear with the above structure. One thing to note is that every component set in a preset file must have a unique UXPin ID attribute `uxpId`. This allows Merge to properly render every component and track overrides of components. 
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you would like to learn more about managing JSX presets and Merge integration. Please see our [Merge documentation](https://www.uxpin.com/docs/merge/what-is-uxpin-merge/).
